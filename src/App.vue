@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <h1>Hello, here!</h1>
+    <h1>Welcome!</h1>
     <p>{{ message }}</p>
     
     <button @click="toggleImage">{{ imageVisible ? 'Hide Image' : 'Show Image' }}</button>
     
     <img v-if="imageVisible" 
-         src="https://www.pocketwanderings.com/wp-content/uploads/2021/01/Spiez-1.jpg"
-         :style="{ width: '500px', height: '500px' }">
+         :src="images[currentImageIndex]"
+         @click="changeImage">
   </div>
 </template>
 
@@ -15,14 +15,25 @@
 export default {
   data() {
     return {
-      message: '------welcome ------',
-      imageVisible: false 
+      message: 'Click the button to toggle the image',
+      imageVisible: false,
+      images: [
+        'https://www.pocketwanderings.com/wp-content/uploads/2021/01/Spiez-1.jpg',
+        'https://i.pinimg.com/originals/32/14/3b/32143bf64ff46d94b4a8f9a81cec176f.jpg',
+        'https://wallpapercave.com/wp/BAzd38d.jpg',
+        'https://jooinn.com/images/a-beach-and-ocean-sunset.jpg'
+      ],
+      currentImageIndex: 0
     };
   },
   methods: {
     toggleImage() {
-      this.message = this.imageVisible ? 'Image hidden!' : 'You clicked the button!';
+      this.message = this.imageVisible ? 'Image is now hidden' : 'Image is now visible';
       this.imageVisible = !this.imageVisible; 
+    },
+    changeImage() {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      console.log('Current Image Index:', this.currentImageIndex);
     }
   }
 }
@@ -30,9 +41,24 @@ export default {
 
 <style>
 #app {
-  font-family: Trebuchet MS, sans-serif;
+  font-family: Arial, sans-serif;
   text-align: center;
-  color: #76032b;
-  margin-top: 50px;
+  padding: 20px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #4400ff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+img {
+  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
+  cursor: pointer; 
 }
 </style>
